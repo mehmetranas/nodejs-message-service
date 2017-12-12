@@ -1,0 +1,17 @@
+<form #form="ngForm">
+<input type="text"
+       name="content"
+       id="content"
+       class="form-control"
+       placeholder="Post a Message"
+       ngModel
+       #content
+       required>
+</form>
+<br>
+<button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="form.invalid"
+        (click)="onSave(form)">
+    Save</button>
