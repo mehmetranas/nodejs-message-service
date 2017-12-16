@@ -8,13 +8,20 @@ import {MessageService} from './message.service';
 })
 
 export class MessageListComponent implements OnInit {
+
     private messages: Message[];
 
     constructor(private messageService: MessageService){}
 
     ngOnInit(): void {
-        this.messages = this.messageService.getMessage();
+
+
+        this.messageService.getMessages()
+            .subscribe(
+                (messages: Message[]) => {
+                    this.messages = this.messageService.messages.reverse();
+                },
+                (err) => console.log(err)
+            );
     }
-
-
 }

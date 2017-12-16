@@ -4,11 +4,14 @@
        id="content"
        class="form-control"
        placeholder="Post a Message"
-       ngModel
+       [ngModel]="messageToEdit?.content"
        #content
        required>
 </form>
 <br>
+<button class="btn btn-danger"
+        (click)="onClear(form)">
+    Clear</button>
 <button
         class="btn btn-primary"
         type="submit"

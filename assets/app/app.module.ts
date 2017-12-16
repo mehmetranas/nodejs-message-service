@@ -14,6 +14,8 @@ import {routing} from './app.router';
 import {LoginComponent} from './auth/login.component';
 import {LogoutComponent} from './auth/logout.component';
 import {SignupComponent} from './auth/signup.component';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import {AppInterceptor} from './app.interceptor';
 
 @NgModule({
     declarations: [
@@ -28,9 +30,19 @@ import {SignupComponent} from './auth/signup.component';
         LogoutComponent,
         SignupComponent
     ],
-    imports: [BrowserModule, FormsModule, ReactiveFormsModule, routing],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        routing,
+        HttpClientModule],
     bootstrap: [AppComponent],
-    providers: [MessageService]
+    providers: [
+        MessageService,
+        {   provide:HTTP_INTERCEPTORS,
+            useClass: AppInterceptor,
+            multi:true
+        }]
 })
 export class AppModule {
 

@@ -7,9 +7,10 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
 var appRoutes = require('./routes/app');
+var messageRoutes = require('./routes/messages');
 
 var app = express();
-mongoose.connect('mongodb://localhost/messageService', { useMongoClient: true });
+mongoose.connect('mongodb://mhmt:8903@ds135196.mlab.com:35196/messageservice', { useMongoClient: true });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,6 +31,7 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use('/message', messageRoutes);
 app.use('/', appRoutes);
 
 // catch 404 and forward to error handler
