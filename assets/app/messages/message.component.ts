@@ -9,18 +9,22 @@ import {MessageService} from './message.service';
 })
 
 export class MessageComponent{
-    @Input() private message: Message;
+    @Input() public message: Message;
 
     constructor(private messageService: MessageService){}
 
-    onEdit(message: Message){
+    private onEdit(message: Message){
         this.messageService.getMessageToEdit(message);
     }
 
-    onDelete(message: Message){
+    private onDelete(message: Message){
         this.messageService.deleteMessage(message).subscribe(
-            (res) => console.log(res),
+            (res) => console.log('Success'),
             (err)=> console.log(err)
         );
+    }
+
+    public belongsUser(): Boolean{
+        return localStorage.getItem('userId') == this.message.userId;
     }
 }

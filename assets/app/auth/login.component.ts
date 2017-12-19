@@ -1,5 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from './auth.service';
+import {User} from './user.model';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
     selector:'app-login',
@@ -20,7 +24,9 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 
 export class LoginComponent implements OnInit{
 
-    private loginForm: FormGroup;
+    public loginForm: FormGroup;
+
+    constructor(private authService: AuthService, private router: Router){}
 
     ngOnInit(): void {
         this.loginForm = new FormGroup({
@@ -30,6 +36,19 @@ export class LoginComponent implements OnInit{
     }
 
     onLogin(){
-        console.log("name: " + this.loginForm.value.mail);
+        const user = new User(this.loginForm.value.password,this.loginForm.value.mail);
+        this.authService.signin(user).subscribe(
+            (res: any) => {
+                this.loginForm.reset();
+                localStorage.setItem('token',res.token);
+                localStorage.setItem('userId',res.userId);
+                this.router.navigate(['messages']);
+            },
+            (err: HttpErrorResponse) => {
+                if(err instanceof Error) console.log('Client-side error');
+                else console.log('Server-side error');
+                console.log(err);
+            }
+        );
     }
 }

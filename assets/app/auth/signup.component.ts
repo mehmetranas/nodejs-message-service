@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, NgForm,  Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from './auth.service';
+import {User} from './user.model';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
     selector:'app-signup',
@@ -19,12 +22,14 @@ import {FormControl, FormGroup, NgForm,  Validators} from '@angular/forms';
         <input type="password" id="password" formControlName="password" class="form-control">
     </div>
     </form>
-        <button class="btn btn-success"  [disabled]="form.invalid">Signup</button>
+        <button class="btn btn-success" (click)="onSignup()"  [disabled]="form.invalid">Signup</button>
     `
 })
 
 export class SignupComponent implements OnInit{
-    private signupForm: FormGroup;
+    public signupForm: FormGroup;
+
+    constructor(private authService: AuthService){}
 
     ngOnInit(): void {
         this.signupForm = new FormGroup({
@@ -35,7 +40,22 @@ export class SignupComponent implements OnInit{
         })
     }
 
-    onSignup(form: NgForm){
-    }
+    onSignup(){
+        const user = new User(
+            this.signupForm.value.password,
+            this.signupForm.value.mail,
+            null,
+            this.signupForm.value.firstName,
+            this.signupForm.value.lastName);
 
+        this.authService.createUser(user).subscribe(
+            (user: User) => {
+                this.signupForm.reset();
+                },
+            (err: HttpErrorResponse) => {
+                if (err instanceof Error) console.log('Client-Side Error');
+                else console.log('Server-Side Error');
+                console.log(err);
+            });
+    }
 }

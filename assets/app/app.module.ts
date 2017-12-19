@@ -14,35 +14,39 @@ import {routing} from './app.router';
 import {LoginComponent} from './auth/login.component';
 import {LogoutComponent} from './auth/logout.component';
 import {SignupComponent} from './auth/signup.component';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AppInterceptor} from './app.interceptor';
+import {AuthService} from './auth/auth.service';
+import {ErrorComponent} from './error/error.component';
+import {ErrorService} from './error/error.service';
+import {AccordionModule, DialogModule, MenuItem} from 'primeng/primeng';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MessageModule} from './messages/message.module';
+import {AuthModule} from './auth/auth.module';
 
 @NgModule({
     declarations: [
         AppComponent,
-        MessageComponent,
-        MessageListComponent,
-        MessageInputComponent,
-        MessagesComponent,
         HeaderComponent,
         AuthComponent,
-        LoginComponent,
-        LogoutComponent,
-        SignupComponent
+        ErrorComponent,
     ],
     imports: [
         BrowserModule,
-        FormsModule,
-        ReactiveFormsModule,
         routing,
-        HttpClientModule],
+        HttpClientModule,
+        MessageModule
+    ],
     bootstrap: [AppComponent],
     providers: [
+        AuthService,
         MessageService,
+        ErrorService,
         {   provide:HTTP_INTERCEPTORS,
             useClass: AppInterceptor,
             multi:true
-        }]
+        }
+        ]
 })
 export class AppModule {
 

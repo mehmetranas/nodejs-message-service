@@ -3,6 +3,7 @@ import {Message} from './message.model';
 import {MessageService} from './message.service';
 import {NgForm} from '@angular/forms';
 import {HttpErrorResponse} from '@angular/common/http';
+import {AuthService} from '../auth/auth.service';
 
 @Component({
     selector: 'app-message-input',
@@ -10,17 +11,17 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 
 export class MessageInputComponent implements OnInit{
-    private messageToEdit: Message;
+    public messageToEdit: Message;
 
     ngOnInit(): void {
-        this.messageService.messegeToEdit.subscribe(
+             this.messageService.messegeToEdit.subscribe(
             (message: Message) => {
                 this.messageToEdit = message;
             }
         )
     }
 
-    constructor(private messageService: MessageService){}
+    constructor(private messageService: MessageService, private auth: AuthService){}
 
     onClear(form: NgForm) {
         this.messageToEdit = null;
@@ -31,18 +32,17 @@ export class MessageInputComponent implements OnInit{
         if(this.messageToEdit){
             this.messageToEdit.content = form.value.content;
             this.messageService.editMessage(this.messageToEdit).subscribe(
-                res => console.log(res),
+                res => {},
                 (err: HttpErrorResponse) => {
                     if (err instanceof Error) console.log('Client-Side Error');
                     else console.log('Server-Side Error');
-                    console.log(err);
                 }
             );
             this.messageToEdit = null;
           }else {
             const message = new Message(form.value.content, 'Deniz');
             this.messageService.addMessage(message).subscribe(
-                res => console.log(res),
+                (message: Message) => {},
                 (err: HttpErrorResponse) => {
                     if (err instanceof Error) console.log('Client-Side Error');
                     else console.log('Server-Side Error');
