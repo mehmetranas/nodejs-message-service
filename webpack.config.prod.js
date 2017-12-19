@@ -11,9 +11,9 @@ module.exports = webpackMerge.smart(commonConfig, {
     },
 
     output: {
-        path: path.resolve(__dirname + '/public/js/app'),
-        filename: 'bundle.js',
+        path: path.resolve(__dirname + '/public/js/app/'),
         publicPath: '/js/app/',
+        filename: 'bundle.js',
         chunkFilename: '[id].[hash].chunk.js'
     },
 
