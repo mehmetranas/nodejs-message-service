@@ -10,6 +10,7 @@ module.exports = webpackMerge(commonConfig, {
         path: path.resolve(__dirname + '/public/js/app'),
         publicPath: "/js/app/",
         filename: 'bundle.js',
+        publicPath: '/js/app/',
         chunkFilename: '[id].chunk.js'
     },
     module: {
@@ -18,8 +19,8 @@ module.exports = webpackMerge(commonConfig, {
                 test: /\.ts$/,
                 use: [
                     {loader: 'awesome-typescript-loader', options: {
-                        transpileOnly: true
-                    }},
+                            transpileOnly: true
+                        }},
                     {loader: 'angular2-template-loader'},
                     {loader: 'angular-router-loader'}
                 ]

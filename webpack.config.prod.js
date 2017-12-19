@@ -12,8 +12,8 @@ module.exports = webpackMerge.smart(commonConfig, {
 
     output: {
         path: path.resolve(__dirname + '/public/js/app'),
-        publicPath: '/js/app/',
         filename: 'bundle.js',
+        publicPath: '/js/app/',
         chunkFilename: '[id].[hash].chunk.js'
     },
 
@@ -27,18 +27,17 @@ module.exports = webpackMerge.smart(commonConfig, {
                 test: /\.ts$/,
                 use: [
                     'awesome-typescript-loader',
-                    'angular2-template-loader',
-                    // 'angular-router-loader?aot=true'
+                    'angular2-template-loader'
                 ]
             }
         ]
     },
 
     plugins: [
-    new ngw.AngularCompilerPlugin({
-      tsConfigPath: './tsconfig.aot.json',
-      entryModule: './assets/app/app.module#AppModule'
-    }),
+        new ngw.AngularCompilerPlugin({
+            tsConfigPath: './tsconfig.aot.json',
+            entryModule: './src/app/app.module#AppModule'
+        }),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: false
         })
