@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AuthService{
 
-    readonly BASE_URL = ' https://app-message-service.herokuapp.com';
+    readonly BASE_URL = 'https://app-message-service.herokuapp.com';
 
     constructor(private http: HttpClient){}
 

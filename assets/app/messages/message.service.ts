@@ -10,7 +10,7 @@ export class MessageService{
 
     public messages: Message[];
     public messegeToEdit = new EventEmitter<Message>();
-    readonly BASE_URL = ' https://app-message-service.herokuapp.com/';
+    readonly BASE_URL = 'https://app-message-service.herokuapp.com/';
 
     constructor(private http: HttpClient, private errorService: ErrorService){}
 
