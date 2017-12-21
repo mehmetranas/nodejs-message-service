@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpRequest} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {User} from './user.model';
 import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuthService{
 
-    readonly BASE_URI = process.env.MONGOLAB_URI || 'https://localhost:2704';
+    readonly BASE_URI = 'https://app-message-service.herokuapp.com';
+    // 'https://app-message-service.herokuapp.com'
 
     constructor(private http: HttpClient){}
 

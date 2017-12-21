@@ -10,7 +10,8 @@ export class MessageService{
 
     public messages: Message[];
     public messegeToEdit = new EventEmitter<Message>();
-    readonly BASE_URI = process.env.MONGOLAB_URL || 'http://localhost:2704';
+    readonly BASE_URI = 'https://app-message-service.herokuapp.com';
+    //'https://app-message-service.herokuapp.com'
 
     constructor(private http: HttpClient, private errorService: ErrorService){}
 
