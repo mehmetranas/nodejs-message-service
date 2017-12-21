@@ -10,13 +10,13 @@ export class MessageService{
 
     public messages: Message[];
     public messegeToEdit = new EventEmitter<Message>();
-    readonly BASE_URL = 'https://app-message-service.herokuapp.com/';
+    readonly BASE_URI = process.env.MONGOLAB_URL || 'http://localhost:2704';
 
     constructor(private http: HttpClient, private errorService: ErrorService){}
 
     public addMessage(message: Message){
         const body = JSON.stringify(message);
-       return this.http.post(this.BASE_URL + '/message', body).map(
+       return this.http.post(this.BASE_URI + '/message', body).map(
            (res: any) => {
                 const message = new Message(
                     res.obj.content,
@@ -30,7 +30,7 @@ export class MessageService{
     }
 
     public getMessages(){
-        return this.http.get(this.BASE_URL + '/message').map((res: any) => {
+        return this.http.get(this.BASE_URI + '/message').map((res: any) => {
             const messages = res.obj;
             let transformedMessages: Message[] = [];
             for (let message of messages){
@@ -51,11 +51,11 @@ export class MessageService{
     }
 
     public editMessage(message: Message){
-        return this.http.put(this.BASE_URL + '/message/' + message.messageId, message);
+        return this.http.put(this.BASE_URI + '/message/' + message.messageId, message);
     }
 
     public deleteMessage(message: Message){
-        return this.http.delete(this.BASE_URL + '/message/' + message.messageId).map(
+        return this.http.delete(this.BASE_URI + '/message/' + message.messageId).map(
             (res: Response) => {
                 this.messages.splice(this.messages.indexOf(message),1);
             }

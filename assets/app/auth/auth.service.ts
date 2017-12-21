@@ -6,13 +6,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AuthService{
 
-    readonly BASE_URL = 'https://app-message-service.herokuapp.com';
+    readonly BASE_URI = process.env.MONGOLAB_URI || 'https://localhost:2704';
 
     constructor(private http: HttpClient){}
 
      public createUser(user: User){
         const body = JSON.stringify(user);
-        return this.http.post(this.BASE_URL + '/user/signup', body).map
+        return this.http.post(this.BASE_URI + '/user/signup', body).map
         ((res: any) => {
             return new User(null,null,null,res.obj.firstName,res.obj.lastName)
         });
@@ -20,7 +20,7 @@ export class AuthService{
 
     public signin(user: User){
         const body = JSON.stringify(user);
-        return this.http.post(this.BASE_URL + '/user/signin', body);
+        return this.http.post(this.BASE_URI + '/user/signin', body);
     }
 
     public logout(){

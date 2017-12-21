@@ -19,7 +19,7 @@ export class MessageListComponent implements OnInit {
         this.messageService.getMessages()
             .subscribe(
                 (messages: Message[]) => {
-                    this.messages = this.messageService.messages.reverse();
+                    this.messages = messages.reverse();
                 },
                 (err) => console.log(err)
             );
