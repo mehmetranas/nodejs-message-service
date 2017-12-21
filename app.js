@@ -11,8 +11,8 @@ var messageRoutes = require('./routes/messages');
 var userRoutes = require('./routes/user');
 
 var app = express();
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/messageService', { useMongoClient: true });
-// mongoose.connect('mongodb://mhmt:8903@ds135196.mlab.com:35196/messageservice', { useMongoClient: true });
+// mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost:27017/messageService', { useMongoClient: true });
+mongoose.connect('mongodb://mhmt:8903@ds135196.mlab.com:35196/messageservice', { useMongoClient: true });
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
